@@ -2,64 +2,195 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Receipt</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <title>Google Receipt</title>
+    <style> body {
+        background: #ededed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    .receipt-container {
+        background: #fff;
+        width: 320px;
+        border-radius: 8px;
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        position: relative;
+        text-align: left;
+    }
+
+    .receipt-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .google-logo {
+        height: 30px;
+        width: 30px;
+        display: flex;
+        align-items: center;
+    }
+
+    .receipt-date {
+        color: #bbb;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .labels {
+        display: flex;
+        justify-content: space-between;
+        color: #bbb;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #000;
+    }
+
+    .receipt-items {
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+
+    .receipt-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        color: #444;
+        font-size: 14px;
+    }
+
+    .receipt-item span:nth-child(2) {
+        text-align: right;
+        width: 100px;
+    }
+
+    .receipt-total {
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+        font-size: 16px;
+        padding-top: 10px;
+        position: relative;
+    }
+
+    /* Curved Line */
+    .receipt-total::after {
+        content: '';
+        position: absolute;
+        width: 100px;
+        height: 10px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 0px;
+        border-bottom: 1px solid #ddd;
+        bottom: -8px;
+        left: 0;
+    }
+
+    .receipt-total .total-label {
+        color: #444;
+    }
+
+    .receipt-total .total-amount {
+        color: #222;
+        text-align: right;
+        width: 100px;
+    }
+
+    .barcode-section {
+        margin-top: 20px;
+        padding: 0 20px;
+        text-align: center;
+    }
+
+    .barcode {
+        display: inline-block;
+        width: 240px;
+        height: 35px;
+        background: repeating-linear-gradient(to right, #222 0px, #222 2px, #fff 2px, #fff 6px); /* Reduced gaps */
+        border-radius: 3px;
+    }
+
+    /* Only Bottom Left Notch */
+    .receipt-container:after {
+        content: '';
+        position: absolute;
+        left: -8px;
+        bottom: 45px;
+        width: 16px;
+        height: 16px;
+        background: #ededed;
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+    /* Remove Top Notch */
+    .receipt-container:before {
+        content: none;
+    }
+
+    .item-details {
+        font-size: 12px;
+        color: #888;
+    }
+</style>
 </head>
 
 <body>
-  <div class="receipt-container">
-    <div class="receipt">
-      <div class="header">
-        <img
-          src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
-          alt="Google Logo"
-        />
-        <span class="date">17.04.2019</span>
-      </div>
+    <div class="receipt-container">
+        <div class="receipt-header">
+            <div class="google-logo">
+                <!-- Google G SVG -->
+                <svg width="30" height="30" viewBox="0 0 32 32">
+                    <g>
+                        <path fill="#4285F4"
+                            d="M16 13.09v5.04h7.09c-.29 1.56-1.75 4.59-7.09 4.59-4.26 0-7.74-3.53-7.74-7.85s3.48-7.85 7.74-7.85c2.43 0 4.07.97 5 1.8l3.4-3.32C22.14 4.37 19.41 3 16 3 8.82 3 3 8.82 3 16s5.82 13 13 13c7.5 0 12.46-5.26 12.46-12.66 0-.85-.09-1.5-.21-2.14H16z" />
+                        <path fill="#34A853"
+                            d="M16 29c3.41 0 6.26-1.13 8.34-3.09l-4-3.28c-1.11.75-2.54 1.27-4.34 1.27-3.33 0-6.15-2.25-7.16-5.29H4.68v3.32C6.74 26.43 11.06 29 16 29z" />
+                        <path fill="#FBBC05"
+                            d="M8.84 18.61A7.93 7.93 0 0 1 8.37 16c0-.91.16-1.79.44-2.61v-3.32H4.68A12.98 12.98 0 0 0 3 16c0 2.12.52 4.13 1.68 5.93l4.16-3.32z" />
+                        <path fill="#EA4335"
+                            d="M16 7.15c1.86 0 3.13.8 3.85 1.47l2.82-2.75C20.26 3.97 18.43 3 16 3c-4.94 0-9.26 2.57-11.32 6.29l4.16 3.32C9.85 9.4 12.67 7.15 16 7.15z" />
+                    </g>
+                </svg>
+            </div>
+            <div class="receipt-date">17.04.2019</div>
+        </div>
 
-      <div class="table-header">
-        <span>DESCRIPTION</span>
-        <span>SUBTOTAL</span>
-      </div>
+        <div class="receipt-body">
+            <div class="labels">
+                <div class="description-title">DESCRIPTION</div>
+                <div class="subtotal-title" style="text-align: right;">SUBTOTAL</div>
+            </div>
+            <div class="receipt-items">
+                <div class="receipt-item">
+                    <span>Google Pixel 3 XL 64 GB<br><span class="item-details">in clearly white</span></span>
+                    <span>$999.00</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Google Pixel 3 Case</span>
+                    <span>$99.00</span>
+                </div>
+            </div>
 
-      <div class="item">
-        <span>Google Pixel 3 XL 64 GB<br />in clearly white</span>
-        <span>$999.00</span>
-      </div>
+            <div class="receipt-total">
+                <span class="total-label">Total</span>
+                <span class="total-amount">$1098.00</span>
+            </div>
+        </div>
 
-      <div class="item">
-        <span>Google Pixel 3 Case</span>
-        <span>$99.00</span>
-      </div>
-
-      <div class="total">
-        <span>Total</span>
-        <span>$1098.00</span>
-      </div>
-
-      <div class="barcode">
-        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60">
-          <rect width="4" height="60" x="0" fill="#000" />
-          <rect width="2" height="60" x="6" fill="#000" />
-          <rect width="6" height="60" x="10" fill="#000" />
-          <rect width="2" height="60" x="18" fill="#000" />
-          <rect width="4" height="60" x="22" fill="#000" />
-          <rect width="2" height="60" x="28" fill="#000" />
-          <rect width="6" height="60" x="32" fill="#000" />
-          <rect width="2" height="60" x="40" fill="#000" />
-          <rect width="4" height="60" x="44" fill="#000" />
-          <rect width="2" height="60" x="50" fill="#000" />
-          <rect width="6" height="60" x="54" fill="#000" />
-          <rect width="2" height="60" x="62" fill="#000" />
-          <rect width="4" height="60" x="66" fill="#000" />
-          <rect width="2" height="60" x="72" fill="#000" />
-          <rect width="6" height="60" x="76" fill="#000" />
-        </svg>
-      </div>
+        <div class="barcode-section">
+            <div class="barcode"></div>
+        </div>
     </div>
-  </div>
 </body>
-
 </html>
